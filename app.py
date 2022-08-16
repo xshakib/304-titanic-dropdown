@@ -11,24 +11,23 @@ from random import randrange
 ###### Define your variables #####
 tabtitle = 'Titanic!'
 color_list = ['paleturquoise', 'lavenderblush', 'aliceblue', 'burlywood', 'deeppink', 'lightyellow', 'beige', 'greenyellow', 'darkorange']
-color1 = '#92B5E8'
-color2 = '#8A44AD'
-color3 = '#FDC300'
+color1 = '#32a852'
+color2 = '#4c32a8'
+color3 = '#b8001f'
 sourceurl = 'https://www.kaggle.com/c/titanic'
-githublink = 'https://github.com/ksebastian/304-titanic-dropdown'
+githublink = 'https://github.com/xshakib/304-titanic-dropdown'
 
 ###### Import a dataframe #######
-df = pd.read_csv(
-    "https://raw.githubusercontent.com/austinlasseter/plotly_dash_tutorial/master/00%20resources/titanic.csv")
-df['Female'] = df['Sex'].map({'male': 0, 'female': 1})
-df['Cabin Class'] = df['Pclass'].map({1: 'first', 2: 'second', 3: 'third'})
-variables_list = ['Survived', 'Female', 'Fare', 'Age']
+df = pd.read_csv("https://raw.githubusercontent.com/austinlasseter/plotly_dash_tutorial/master/00%20resources/titanic.csv")
+df['Female']=df['Sex'].map({'male':0, 'female':1})
+df['Cabin Class'] = df['Pclass'].map({1:'first', 2: 'second', 3:'third'})
+variables_list=['Survived', 'Female', 'Fare', 'Age']
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
-app.title = tabtitle
+app.title=tabtitle
 
 ####### Layout of the app ########
 app.layout = html.Div([
@@ -50,9 +49,8 @@ app.layout = html.Div([
 @app.callback(Output('display-value', 'figure'),
               [Input('dropdown', 'value')])
 def display_value(continuous_var):
-    grouped_mean = df.groupby(['Cabin Class', 'Embarked'])[continuous_var].mean()
-    results = pd.DataFrame(grouped_mean)
-
+    grouped_mean=df.groupby(['Embarked', 'Cabin Class'])[continuous_var].mean()
+    results=pd.DataFrame(grouped_mean)
     # Create a grouped bar chart
     mydata1 = go.Bar(
         x=results.loc['Cherbourg'].index,
